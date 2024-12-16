@@ -1,0 +1,260 @@
+set cut_paste_input [stack 0]
+version 12.2 v10
+push 0
+push $cut_paste_input
+Group {
+inputs 2
+name EdgeScatter
+selected true
+xpos -1439
+ypos -13711
+addUserKnob {20 User}
+addUserKnob {26 text l "Inner Scatter"}
+addUserKnob {7 scatter1 l Amount R 0 250}
+scatter1 100
+addUserKnob {7 mix1 l Mix}
+mix1 0.15
+addUserKnob {26 text_1 l "Outer Scatter"}
+addUserKnob {7 scatter2 l Amount R 0 250}
+scatter2 15
+addUserKnob {7 mix2 l Mix}
+mix2 0.1
+addUserKnob {26 ""}
+addUserKnob {6 log l Log +STARTLINE}
+log true
+addUserKnob {6 copybbox l "Copy BBox" -STARTLINE}
+copybbox true
+}
+Input {
+inputs 0
+name Image
+xpos 390
+ypos -418
+}
+Dot {
+name Dot2
+xpos 424
+ypos -51
+}
+set Ncf993900 [stack 0]
+Dot {
+name Dot14
+xpos 172
+ypos -51
+}
+Dot {
+name Dot13
+xpos 172
+ypos 1373
+}
+Input {
+inputs 0
+name ScatterMatte
+xpos 1426
+ypos 202
+number 1
+}
+Dot {
+name Dot10
+xpos 1460
+ypos 434
+}
+set Ncf991d00 [stack 0]
+Dot {
+name Dot5
+xpos 1700
+ypos 434
+}
+set Ncf991600 [stack 0]
+Dot {
+name Dot9
+xpos 1895
+ypos 434
+}
+push $Ncf991600
+Blur {
+channels alpha
+size {{scatter2}}
+name Blur3
+label "size: \[value size]"
+xpos 1666
+ypos 598
+}
+Dot {
+name Dot8
+xpos 1700
+ypos 743
+}
+ChannelMerge {
+inputs 2
+operation stencil
+bbox B
+name ChannelMerge2
+xpos 1861
+ypos 727
+}
+push $Ncf993900
+Dot {
+name Dot3
+xpos 821
+ypos -51
+}
+set Ncf973200 [stack 0]
+Dot {
+name Dot11
+xpos 2148
+ypos -51
+}
+Blur {
+channels rgb
+size {{scatter2}}
+name Blur4
+label "size: \[value size]"
+xpos 2114
+ypos 577
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+bbox A
+name Copy2
+xpos 2114
+ypos 733
+}
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace3
+xpos 2114
+ypos 823
+disable {{1-log.0}}
+}
+Premult {
+name Premult2
+xpos 2114
+ypos 910
+}
+Dot {
+name Dot12
+xpos 2148
+ypos 1143
+}
+push $Ncf991d00
+Dot {
+name Dot7
+xpos 1233
+ypos 434
+}
+set Ncf970100 [stack 0]
+Dot {
+name Dot6
+xpos 1233
+ypos 743
+}
+push $Ncf970100
+Dot {
+name Dot1
+xpos 1055
+ypos 434
+}
+Invert {
+channels alpha
+name Invert1
+xpos 1021
+ypos 531
+}
+Blur {
+channels alpha
+size {{scatter1}}
+name Blur1
+label "size: \[value size]"
+xpos 1021
+ypos 596
+}
+ChannelMerge {
+inputs 2
+operation in
+bbox A
+name ChannelMerge1
+xpos 1021
+ypos 727
+}
+push $Ncf973200
+Blur {
+channels rgb
+size {{scatter1}}
+name Blur2
+label "size: \[value size]"
+xpos 787
+ypos 577
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+bbox A
+name Copy1
+xpos 787
+ypos 733
+}
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace1
+xpos 787
+ypos 792
+disable {{1-log.0}}
+}
+Premult {
+name Premult1
+xpos 787
+ypos 847
+}
+Dot {
+name Dot4
+xpos 821
+ypos 948
+}
+push $Ncf993900
+Colorspace {
+colorspace_out AlexaV3LogC
+name Colorspace2
+xpos 390
+ypos 828
+disable {{1-log.0}}
+}
+Merge2 {
+inputs 2
+output rgb
+mix {{mix1}}
+name Merge1
+xpos 390
+ypos 944
+}
+Merge2 {
+inputs 2
+output rgb
+mix {{mix2}}
+name Merge2
+xpos 390
+ypos 1139
+}
+Colorspace {
+colorspace_in AlexaV3LogC
+name Colorspace4
+xpos 390
+ypos 1214
+disable {{1-log.0}}
+}
+CopyBBox {
+inputs 2
+name CopyBBox1
+xpos 390
+ypos 1369
+disable {{1-copybbox}}
+}
+Output {
+name Output1
+xpos 390
+ypos 1615
+}
+end_group
